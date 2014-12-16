@@ -22,9 +22,9 @@ def moveFiles(iSource, iDestination):
         
 def checkInputIntegrity(iSource, iDestination):
     if (not os.path.isdir(iSource)):
-        raise NameError('Source directory does not exists! Exiting the program!')
+        raise NameError('Source directory does not exist! Exiting the program!')
     if (not os.path.isdir(iDestination)):
-        raise NameError('Destination directory does not exists! Exiting the program!')
+        raise NameError('Destination directory does not exist! Exiting the program!')
 
 if __name__ == '__main__':
     args = optionInit()
