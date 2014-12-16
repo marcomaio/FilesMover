@@ -11,32 +11,26 @@ def optionInit():
 def moveFiles(iSource, iDestination):
     for root, dirs, files in os.walk(iSource):
         for aFile in files:
-            aSourceFile = root + '\\' + aFile
-            aDestinationFile = iDestination + '\\' + aFile
+            aSourceFile = os.path.join(root, aFile)
+            aDestinationFile = os.path.join(iDestination, aFile) 
             if aFile in os.listdir(iDestination):
                 if os.stat(aSourceFile).st_size != os.stat(aDestinationFile).st_size:
-                    print ('Trovato file con stesso nome ' + aFile + ' ma diverse dimensioni')
+                print ('Found file with same name \"' + aFile + '\" but different size') 
+                # we should rename the file
             else:
                 shutil.move(aSourceFile, aDestinationFile)
-                
         
 def checkInputIntegrity(iSource, iDestination):
     if (not os.path.isdir(iSource)):
         raise NameError('Source directory does not exists! Exiting the program!')
     if (not os.path.isdir(iDestination)):
-        os.makedirs(iDestination)
-        os.chmod(iDestination, 0o776)
-        #aUid = os.stat(iSource).st_uid
-        #aGid = os.stat(iSource).st_gid
-        #os.chown(aNewDirPath, aUid, aGid)
-        
+        raise NameError('Destination directory does not exists! Exiting the program!')
 
 if __name__ == '__main__':
     args = optionInit()
     aSource = args.source
     aDestination = args.destination
-    print('Moving from ' + aSource + ' to '+ aDestination)
-    print(os.listdir(args.source))
     checkInputIntegrity(aSource, aDestination)
+    print('Moving from ' + aSource + ' to '+ aDestination)
     moveFiles(aSource, aDestination)
     
